@@ -38,7 +38,7 @@ Here is a silly graph
 
     * Matches with params sent to bikehopper backend
 ```
-## Using`
+## Using
 To run this you must pull down this git repo and then make sure you have Java version `17.0.5-tem` installed.
 Launch the app via intelli-j run or via cmd line `./gradlew run`
 
