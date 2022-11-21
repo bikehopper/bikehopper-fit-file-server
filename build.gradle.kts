@@ -7,7 +7,7 @@ plugins {
     application
 }
 
-group = "net.finalatomicbuster"
+group = "org.bikehopper"
 version = "1.0-SNAPSHOT"
 
 repositories {
