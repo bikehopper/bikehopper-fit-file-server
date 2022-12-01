@@ -20,6 +20,12 @@ fun main() {
         ctx.result(bikeHopperFileCreator.getBuffer())
     }
 
+    // Simple health check endpoint.
+    app.get("/health") { ctx ->
+        println("Health check")
+        ctx.result("OK")
+    }
+
     // Handle exceptions thrown from the BikeHopperClient's fetchRoute method
     app.exception(ClientRequestException::class.java) { e, ctx ->
         ctx.status(400)
