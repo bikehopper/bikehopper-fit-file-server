@@ -3,9 +3,15 @@ import bikehopperfilecreator.BikeHopperFileCreator
 import bikehopperfilecreator.BikeHopperFileCreatorException
 import io.javalin.Javalin
 import io.ktor.client.plugins.*
+import org.slf4j.LoggerFactory;
 
 fun main() {
     val app = Javalin.create(/* TODO: Config */)
+    val logger = LoggerFactory.getLogger("Server")
+
+    app.before { ctx ->
+        logger.info("Request: ${ctx.method()} ${ctx.path()} params: ${ctx.queryParamMap()}")
+    }
 
     app.get("/fit") { ctx ->
         val bhClient = BikeHopperClient()
@@ -22,18 +28,19 @@ fun main() {
 
     // Simple health check endpoint.
     app.get("/health") { ctx ->
-        println("Health check")
         ctx.result("OK")
     }
 
     // Handle exceptions thrown from the BikeHopperClient's fetchRoute method
     app.exception(ClientRequestException::class.java) { e, ctx ->
+        logger.error("ClientRequestException: ${e.message}")
         ctx.status(400)
         ctx.result(e.localizedMessage)
     }
 
     // Handle exceptions thrown when creating the FIT file
     app.exception(BikeHopperFileCreatorException::class.java) { e, ctx ->
+        logger.error("BikeHopperFileCreatorException: ${e.message}")
         ctx.status(500)
         ctx.result(e.localizedMessage)
     }

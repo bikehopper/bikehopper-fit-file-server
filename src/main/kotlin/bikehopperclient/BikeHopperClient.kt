@@ -18,7 +18,6 @@ public class BikeHopperClient() {
     private val url = "https://api-staging.bikehopper.org"
     private val client = HttpClient(CIO) {
         expectSuccess = true
-        install(Logging)
         install(ContentNegotiation) {
             json(Json {
                 prettyPrint = true
