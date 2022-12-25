@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.bikehopper"
-version = "0.1.3-SNAPSHOT"
+version = "0.1.4-SNAPSHOT"
 
 repositories {
     mavenCentral()
