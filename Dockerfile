@@ -1,6 +1,7 @@
 FROM gradle:jdk17-alpine AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
+RUN gradle clean
 RUN gradle build --no-daemon
 
 FROM eclipse-temurin:17-ubi9-minimal

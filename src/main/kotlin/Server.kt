@@ -5,9 +5,11 @@ import io.javalin.Javalin
 import io.ktor.client.plugins.*
 import org.slf4j.LoggerFactory;
 
+
 fun main() {
     val app = Javalin.create(/* TODO: Config */)
     val logger = LoggerFactory.getLogger("Server")
+    logger.info("Starting BikeHopperServer v0.1.3")
 
     app.before { ctx ->
         logger.info("Request: ${ctx.method()} ${ctx.path()} params: ${ctx.queryParamMap()}")
