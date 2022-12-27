@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.bikehopper"
-version = "0.1.4-SNAPSHOT"
+version = "0.1.5-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -23,6 +23,7 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:2.1.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.1.3")
     implementation("io.ktor:ktor-client-content-negotiation:2.1.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
