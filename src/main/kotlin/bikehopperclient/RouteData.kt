@@ -1,7 +1,7 @@
 package bikehopperclient
 import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class RouteData(val paths: List<Paths>)
 
 @Serializable
