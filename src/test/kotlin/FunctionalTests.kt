@@ -61,7 +61,7 @@ class FunctionalTests {
         )
 
         // Get fit byte array.
-        var fitData: ByteArray = runBlocking {
+        val fitData: ByteArray = runBlocking {
             client.get("http://localhost:${port}/fit"){
                 url {
                     params.forEach { (key, values) -> values.forEach { value -> parameters.append(key, value)}}
