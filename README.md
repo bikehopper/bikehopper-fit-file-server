@@ -49,4 +49,4 @@ An example request is as such.
 ## Testing
 Functional testing can be run via the following `./gradlew test`
 
-This testing is quite minimal at the moment but does at the very least try to verify that the fit file created is an actual valid fit file.  Additionally it is worth taking into consideration that currently the test that does this will fail if the bikehopper backend is currently down.
+This testing is quite minimal at the moment but does at the very least try to verify that the fit file created is an actual valid fit file.  Additionally it is worth taking into consideration that currently the test that does this will fail if the bikehopper backend is currently unavailable.
