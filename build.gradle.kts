@@ -15,7 +15,6 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
     implementation(files("lib/fit.jar"))
     implementation("io.javalin:javalin:5.2.0")
     implementation("org.slf4j:slf4j-simple:2.0.5")
