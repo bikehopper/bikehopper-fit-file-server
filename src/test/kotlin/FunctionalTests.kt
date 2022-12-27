@@ -38,7 +38,7 @@ class FunctionalTests {
     fun checkHealth() {
         assertEquals("OK", runBlocking {
             client.get("http://localhost:${port}/health").bodyAsText()
-        } )
+        })
     }
 
     @DisplayName("Test GET - /fit/, FIT data created is valid Fit Data")
@@ -62,14 +62,75 @@ class FunctionalTests {
 
         // Get fit byte array.
         val fitData: ByteArray = runBlocking {
-            client.get("http://localhost:${port}/fit"){
+            client.get("http://localhost:${port}/fit") {
                 url {
-                    params.forEach { (key, values) -> values.forEach { value -> parameters.append(key, value)}}
+                    params.forEach { (key, values) -> values.forEach { value -> parameters.append(key, value) } }
                 }
             }.body()
         }
 
         val decoder = Decode()
         assertTrue(decoder.checkFileIntegrity(fitData.inputStream()), "Data is not in Fit format")
+    }
+
+    @DisplayName("Test GET - /fit/, Must provide path query param, expected 400")
+    @Test
+    fun checkFitFileParamsWithoutPath() {
+        val params = mapOf(
+            "locale" to listOf("en-US"),
+            "elevation" to listOf("true"),
+            "useMiles" to listOf("false"),
+            "layer" to listOf("OpenStreetMap"),
+            "profile" to listOf("pt"),
+            "optimize" to listOf("true"),
+            "pointsEncoded" to listOf("false"),
+            "pt.earliest_departure_time" to listOf("2022-11-01T02:31:44.439Z"),
+            "pt.connecting_profile" to listOf("bike2"),
+            "pt.arrive_by" to listOf("false"),
+            "details" to listOf("cycleway", "road_class", "street_name"),
+            "point" to listOf("37.78306,-122.45867", "37.78516,-122.46238")
+        )
+
+
+        assertEquals(
+            400, runBlocking {
+                client.get("http://localhost:${port}/fit") {
+                    url {
+                        params.forEach { (key, values) -> values.forEach { value -> parameters.append(key, value) } }
+                    }
+                }.status.value
+            }, "Not providing a path param should return a 400 status"
+        )
+    }
+
+    @DisplayName("Test GET - /fit/, Must provide path query param in a valid range, expected 400")
+    @Test
+    fun checkFitFileParamsWithInvalidPathRange() {
+        val params = mapOf(
+            "locale" to listOf("en-US"),
+            "elevation" to listOf("true"),
+            "useMiles" to listOf("false"),
+            "layer" to listOf("OpenStreetMap"),
+            "profile" to listOf("pt"),
+            "optimize" to listOf("true"),
+            "pointsEncoded" to listOf("false"),
+            "pt.earliest_departure_time" to listOf("2022-11-01T02:31:44.439Z"),
+            "pt.connecting_profile" to listOf("bike2"),
+            "pt.arrive_by" to listOf("false"),
+            "details" to listOf("cycleway", "road_class", "street_name"),
+            "point" to listOf("37.78306,-122.45867", "37.78516,-122.46238"),
+            "path" to listOf("999")
+        )
+
+
+        assertEquals(
+            400, runBlocking {
+                client.get("http://localhost:${port}/fit") {
+                    url {
+                        params.forEach { (key, values) -> values.forEach { value -> parameters.append(key, value) } }
+                    }
+                }.status.value
+            }, "Providing an invalid path value should return a 400 status"
+        )
     }
 }

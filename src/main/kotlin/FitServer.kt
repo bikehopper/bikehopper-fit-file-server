@@ -10,7 +10,7 @@ class FitServer(private val port: Int = 9001) {
     private val logger = LoggerFactory.getLogger("Server")
 
     fun start() {
-        logger.info("Starting Fit-Server v0.1.4")
+        logger.info("Starting Fit-Server v0.1.5")
 
         app.before { ctx ->
             logger.info("Request: ${ctx.method()} ${ctx.path()} params: ${ctx.queryParamMap()}")
